@@ -67,7 +67,6 @@ export const TodoProvider = ({ children }) => {
   const checkTodo = (checkedTodo) => {
     const getPosition = state.todos.findIndex(el => el.id === checkedTodo.id)
     const newArray = state.todos.splice(getPosition,1,{id: checkedTodo.id, text: checkedTodo.text, completed: !checkedTodo.completed})
-    
 
     dispatch({
       type: "CHECK_TODO",
@@ -75,7 +74,6 @@ export const TodoProvider = ({ children }) => {
     });
 
     inputRef.current.focus();
-    // console.log(checkedTodo)
   };
 
   const deleteTodo = (id) => {
@@ -83,6 +81,8 @@ export const TodoProvider = ({ children }) => {
       type: "DELETE_TODO",
       payload: id
     });
+
+    inputRef.current.focus();
   };
 
   // const handleSubmit = (e) => {
