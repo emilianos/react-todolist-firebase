@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../context/TodoState";
+import { TodoContext } from "../context/TodoContext";
 import { v4 as uuidv4 } from "uuid";
 
 const Form = () => {
@@ -17,7 +17,7 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue === "") return;
-    // db.collection("todos").add({ text: inputValue });
+    
     const newTodo = {
       id: uuidv4(),
       text: inputValue,

@@ -5,53 +5,50 @@ import React, {
   useEffect,
   useRef
 } from "react";
-// import firebase from "../firebase";
-import AppReducer from "./AppReducer";
+import firebase from "../firebase";
+import TodoReducer from "./TodoReducer";
 
 const initialState = {
-  todos: [
-    { id: 0, text: "number 1", completed: false },
-    { id: 1, text: "number 2", completed: true },
-    { id: 2, text: "number 3", completed: true },
-    { id: 3, text: "number 4", completed: false },
-    { id: 4, text: "number 5", completed: false },
-    { id: 5, text: "number 6", completed: false }
-  ]
+  todos: []
 };
 
 export const TodoContext = createContext(initialState);
 
 export const TodoProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AppReducer, initialState);
+  const [state, dispatch] = useReducer(TodoReducer, initialState);
+
   const inputRef = useRef(null);
   
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const [currentTodo, setCurrentTodo] = useState();
+  const [currentTodo, setCurrentTodo] = useState(null);
 
-  // const db = firebase.firestore();
-
-  // useEffect(() => {
-  //   const unsubscribe = db.collection("todos").onSnapshot((snapshot) => {
-  //     const todosData = [];
-  //     snapshot.forEach((doc) => todosData.push({ ...doc.data(), id: doc.id }));
-  //     setTodos(todosData);
-  //     inputRef.current.focus();
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
+  const db = firebase.firestore();
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    const unsubscribe = db.collection("todos").onSnapshot((snapshot) => {
+      const todosData = [...state.todos];
+      snapshot.forEach((doc) => todosData.push({ ...doc.data(), id: doc.id }));
 
-  // Actions
+      inputRef.current.focus();
+
+      dispatch({
+        type: "UPDATE_TODOS",
+        payload: todosData
+      });
+    });
+
+    return unsubscribe;
+  }, [db]);
+
+
   const addTodo = (todo) => {
+    const newTodo = db.collection("todos").add(todo);
+
     dispatch({
       type: "ADD_TODO",
-      payload: todo
+      payload: newTodo
     });
   };
 
@@ -77,31 +74,15 @@ export const TodoProvider = ({ children }) => {
   };
 
   const deleteTodo = (id) => {
-    const newArray = state.todos.filter((t) => t.id !== id);
+    const delTodo = db.collection("todos").doc(id).delete();
 
     dispatch({
       type: "DELETE_TODO",
-      payload: newArray
+      payload: delTodo
     });
 
     inputRef.current.focus();
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (inputValue === "") return;
-  //   db.collection("todos").add({ text: inputValue });
-  //   setInputValue("");
-  //   inputRef.current.focus();
-  // };
-
-  // const handleDeleteTodo = (id) => {
-  //   db.collection("todos").doc(id).delete();
-  // };
-
-  // const updateSetInputValue = (text) => {
-  //   setInputValue(text);
-  // };
 
   return (
     <div>
