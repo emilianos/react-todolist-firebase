@@ -13,6 +13,12 @@ const Todo = ({ todo }) => {
     setCurrentTodo(todo);
   };
 
+  const handleDelete = (id) => {
+    deleteTodo(id)
+    setIsEditing(false);
+    setInputValue("");
+  }
+
   // const handleCheck = (todo) => {
   //   setCurrentTodo(todo);
   //   inputRef.current.focus();
@@ -24,7 +30,7 @@ const Todo = ({ todo }) => {
         <span className="checkbox">{todo.completed ? "☑︎" : "☐"}</span>
         <span className="text">{todo.text}</span>
       </span>
-      <span className="todo-delete" onClick={() => deleteTodo(todo.id)}>
+      <span className="todo-delete" onClick={() => handleDelete(todo.id)}>
         ×
       </span>
       <span className="todo-delete" onClick={() => handleEdit(todo)} hidden={todo.completed}>
