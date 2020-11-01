@@ -19,15 +19,15 @@ const Todo = ({ todo }) => {
   // };
 
   return (
-    <div key={todo.id} className={todo.completed ? "todo completed" : "todo"}>
-      <span onClick={() => checkTodo(todo)} className="todo-label">
+    <div className={todo.completed ? "todo completed" : "todo"} onClick={(e) => (e.target === e.currentTarget) && checkTodo(todo)}>
+      <span className="todo-label">
         <span className="checkbox">{todo.completed ? "☑︎" : "☐"}</span>
         <span className="text">{todo.text}</span>
       </span>
-      <span onClick={() => deleteTodo(todo.id)} className="todo-delete">
+      <span className="todo-delete" onClick={() => deleteTodo(todo.id)}>
         ×
       </span>
-      <span onClick={() => handleEdit(todo)} className="todo-delete" hidden={todo.completed}>
+      <span className="todo-delete" onClick={() => handleEdit(todo)} hidden={todo.completed}>
         ✎
       </span>
     </div>

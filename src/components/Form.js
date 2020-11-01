@@ -59,24 +59,24 @@ const Form = () => {
     >
       <div className="input-container">
         <input
+          className="input"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="input"
           placeholder={"Type here..."}
           ref={inputRef}
         />
         <button
+          className="cancel"
           type="button"
           onClick={handleCancel}
-          className="cancel"
           hidden={!isEditing}
         >
           ×
         </button>
       </div>
       <button
-        type="submit"
         className="submit"
+        type="submit"
       >
         {isEditing ? "Update" : "Submit"}
       </button>

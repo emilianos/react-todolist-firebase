@@ -8,7 +8,7 @@ const Todos = () => {
   return (
     <div>
       {todos.map((todo, index) => (
-        <Todo key={todo.id} todo={todo} index={index} />
+        <Todo key={todo.id} index={index} todo={todo} />
       ))}
     </div>
   );
