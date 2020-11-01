@@ -77,9 +77,11 @@ export const TodoProvider = ({ children }) => {
   };
 
   const deleteTodo = (id) => {
+    const newArray = state.todos.filter((t) => t.id !== id);
+
     dispatch({
       type: "DELETE_TODO",
-      payload: id
+      payload: newArray
     });
 
     inputRef.current.focus();
@@ -91,11 +93,6 @@ export const TodoProvider = ({ children }) => {
   //   db.collection("todos").add({ text: inputValue });
   //   setInputValue("");
   //   inputRef.current.focus();
-  // };
-
-  // const handleCancel = () => {
-  //   setIsEditing(false);
-  //   setInputValue("");
   // };
 
   // const handleDeleteTodo = (id) => {
