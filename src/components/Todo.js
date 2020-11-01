@@ -6,34 +6,37 @@ const Todo = ({ todo }) => {
     TodoContext
   );
 
-  const handleEdit = (todo) => {
+  const handleEdit = (e, todo) => {
+    e.stopPropagation()
     setIsEditing(true);
     setInputValue(todo.text);
     inputRef.current.focus();
     setCurrentTodo(todo);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (e, id) => {
+    e.stopPropagation()
     deleteTodo(id)
     setIsEditing(false);
     setInputValue("");
+  };
+
+  const handleCheck = (todo) => {
+    setIsEditing(false);
+    setInputValue("");
+    checkTodo(todo);
   }
 
-  // const handleCheck = (todo) => {
-  //   setCurrentTodo(todo);
-  //   inputRef.current.focus();
-  // };
-
   return (
-    <div className={todo.completed ? "todo completed" : "todo"} onClick={(e) => (e.target === e.currentTarget) && checkTodo(todo)}>
+    <div className={todo.completed ? "todo completed" : "todo"} onClick={() => handleCheck(todo)}>
       <span className="todo-label">
         <span className="checkbox">{todo.completed ? "☑︎" : "☐"}</span>
         <span className="text">{todo.text}</span>
       </span>
-      <span className="todo-delete" onClick={() => handleDelete(todo.id)}>
+      <span className="todo-delete" onClick={(e) => handleDelete(e, todo.id)}>
         ×
       </span>
-      <span className="todo-delete" onClick={() => handleEdit(todo)} hidden={todo.completed}>
+      <span className="todo-delete" onClick={(e) => handleEdit(e, todo)} hidden={todo.completed}>
         ✎
       </span>
     </div>
