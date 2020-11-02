@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../context/TodoState";
-import { v4 as uuidv4 } from "uuid";
+import { TodoContext } from "../context/TodoContext";
 
 const Form = () => {
   const {
@@ -17,9 +16,8 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue === "") return;
-    // db.collection("todos").add({ text: inputValue });
+
     const newTodo = {
-      id: uuidv4(),
       text: inputValue,
       completed: false
     };
@@ -32,7 +30,6 @@ const Form = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     if (inputValue === currentTodo) return;
-    // db.collection("todos").add({ text: inputValue });
     
     const updatedTodo = {
       id: currentTodo.id,

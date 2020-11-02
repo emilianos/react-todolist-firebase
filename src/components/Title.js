@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { TitleContext } from "../context/TitleState";
-import { TodoContext } from "../context/TodoState";
+import { TitleContext } from "../context/TitleContext";
+import { TodoContext } from "../context/TodoContext";
 
 const Title = () => {
   const { listName } = useContext(TitleContext);

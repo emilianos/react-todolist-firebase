@@ -1,5 +1,10 @@
 export default (state, action) => {
   switch (action.type) {
+    case "UPDATE_TODOS":
+      return {
+        ...state,
+        todos: [...action.payload]
+      };
     case "ADD_TODO":
       return {
         ...state,
@@ -18,7 +23,7 @@ export default (state, action) => {
     case "DELETE_TODO":
       return {
         ...state,
-        todos: [...action.payload]
+        todos: [...state.todos]
       };
     default:
       return state;
