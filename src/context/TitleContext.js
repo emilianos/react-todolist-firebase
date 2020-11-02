@@ -3,7 +3,7 @@ import React, { createContext } from "react";
 export const TitleContext = createContext();
 
 export const TitleProvider = (props) => {
-  const listName = "Emiliano";
+  const listName = "Emi";
 
   return (
     <div>

@@ -53,21 +53,23 @@ export const TodoProvider = ({ children }) => {
   };
 
   const editTodo = (updatedTodo) => {
-    const getPosition = state.todos.findIndex(el => el.id === updatedTodo.id)
-    const newArray = state.todos.splice(getPosition,1,{id: updatedTodo.id, text: updatedTodo.text, completed: updatedTodo.completed})
+    const updTodo = db.collection("todos").doc(updatedTodo.id).set(updatedTodo);
+
     dispatch({
       type: "EDIT_TODO",
-      payload: newArray
+      payload: updTodo
     });
   };
   
-  const checkTodo = (checkedTodo) => {
-    const getPosition = state.todos.findIndex(el => el.id === checkedTodo.id)
-    const newArray = state.todos.splice(getPosition,1,{id: checkedTodo.id, text: checkedTodo.text, completed: !checkedTodo.completed})
+  const checkTodo = (todo) => {
+    const chkTodo = db.collection("todos").doc(todo.id).set({
+      text: todo.text,
+      completed: !todo.completed
+    });
 
     dispatch({
       type: "CHECK_TODO",
-      payload: newArray
+      payload: chkTodo
     });
 
     inputRef.current.focus();
