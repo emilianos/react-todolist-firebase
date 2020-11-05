@@ -1,25 +1,36 @@
 import React from "react";
-import Form from "./components/Form";
-import Title from "./components/Title";
-import Todos from "./components/Todos";
+import Nav from "./components/Nav";
+import Login from "./components/Login";
+// import Logout from "./components/Logout";
+import Main from "./components/Main";
+import Settings from "./components/Settings";
 
-import { TodoProvider } from "./context/TodoContext";
-import { TitleProvider } from "./context/TitleContext";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
 import "./App.css";
 
 const App = () => {
   return (
-    <div className="app">
-      <TodoProvider>
-        <div className="todolist">
-          <TitleProvider>
-            <Title />
-          </TitleProvider>
-          <Form />
-          <Todos />
-        </div>
-      </TodoProvider>
-    </div>
+    <Router>
+      <div className="app">
+        <Nav>
+          <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/settings">Settings</Link>
+          {/* <Link to="/logout">Logout</Link> */}
+        </Nav>
+
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/login" component={Login} />
+          <Route path="/settings" component={Settings} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
