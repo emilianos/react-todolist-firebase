@@ -1,12 +1,9 @@
 import React from "react";
+import Title from "./Title"
 
 const Settings = () => {
   return (
-    <div>
-      import React from "react";
-      
-      <h2>Settings</h2>
-    </div>
+    <Title value="Settings" />
   )
 }
 

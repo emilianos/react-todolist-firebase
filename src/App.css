@@ -14,6 +14,30 @@
   color: var(--accent-color);
 }
 
+.navigation {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-content: space-between;
+  justify-content: flex-end;
+}
+
+.navigation > li {
+  padding: 10px;
+  opacity: .6;
+  cursor: pointer;
+}
+
+.navigation > li a {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+.navigation > li:hover {
+  opacity: 1;
+}
+
 .todolist {
   margin: auto;
   max-width: 425px;
@@ -30,6 +54,10 @@
 
 .form {
   display: flex;
+}
+
+.login-form input {
+  margin-bottom: 10px;
 }
 
 .input {

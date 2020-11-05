@@ -1,16 +1,8 @@
-import React, { useContext } from "react";
-import { TitleContext } from "../context/TitleContext";
-import { TodoContext } from "../context/TodoContext";
+import React from "react";
 
-const Title = () => {
-  const { listName } = useContext(TitleContext);
-  const { todos } = useContext(TodoContext);
-  const completed = todos.filter(t => t.completed === false).length
-
+const Title = ({value}) => {
   return (
-    <div>
-      <h1 className="title">{listName}'s Todolist: {completed > 0 ? completed : "🥳"}</h1>
-    </div>
+      <h1 className="title">{value}</h1>
   );
 };
 

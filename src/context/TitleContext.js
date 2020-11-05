@@ -2,14 +2,12 @@ import React, { createContext } from "react";
 
 export const TitleContext = createContext();
 
-export const TitleProvider = (props) => {
-  const listName = "Emi";
+export const TitleProvider = ({ children }) => {
+  let menuTitle = "";
 
   return (
-    <div>
-      <TitleContext.Provider value={{ listName }}>
-        {props.children}
-      </TitleContext.Provider>
-    </div>
+    <TitleContext.Provider value={{ menuTitle }}>
+      {children}
+    </TitleContext.Provider>
   );
 };
