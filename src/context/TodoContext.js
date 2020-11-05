@@ -27,7 +27,7 @@ export const TodoProvider = ({ children }) => {
   const db = firebase.firestore();
 
   useEffect(() => {
-    const unsubscribe = db.collection("todos").onSnapshot((snapshot) => {
+    const unsubscribe = db.collection("todos").orderBy("createdAt").onSnapshot((snapshot) => {
       const todosData = [...state.todos];
       snapshot.forEach((doc) => todosData.push({ ...doc.data(), id: doc.id }));
 

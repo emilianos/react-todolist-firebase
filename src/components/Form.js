@@ -19,7 +19,8 @@ const Form = () => {
 
     const newTodo = {
       text: inputValue,
-      completed: false
+      completed: false,
+      createdAt: new Date()
     };
 
     addTodo(newTodo);
