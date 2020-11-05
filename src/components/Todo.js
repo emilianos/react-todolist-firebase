@@ -28,7 +28,7 @@ const Todo = ({ todo }) => {
   }
 
   return (
-    <div className={todo.completed ? "todo completed" : "todo"} onClick={() => handleCheck(todo)}>
+    <div key={todo.id} className={todo.completed ? "todo completed" : "todo"} onClick={() => handleCheck(todo)}>
       <span className="todo-label">
         <span className="checkbox">{todo.completed ? "☑︎" : "☐"}</span>
         <span className="text">{todo.text}</span>
