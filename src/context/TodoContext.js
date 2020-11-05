@@ -52,8 +52,8 @@ export const TodoProvider = ({ children }) => {
     });
   };
 
-  const editTodo = (updatedTodo) => {
-    const updTodo = db.collection("todos").doc(updatedTodo.id).set(updatedTodo);
+  const editTodo = (id, updatedTodo) => {
+    const updTodo = db.collection("todos").doc(id).set(updatedTodo);
 
     dispatch({
       type: "EDIT_TODO",
@@ -64,7 +64,8 @@ export const TodoProvider = ({ children }) => {
   const checkTodo = (todo) => {
     const chkTodo = db.collection("todos").doc(todo.id).set({
       text: todo.text,
-      completed: !todo.completed
+      completed: !todo.completed,
+      createdAt: todo.createdAt
     });
 
     dispatch({

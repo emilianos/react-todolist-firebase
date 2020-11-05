@@ -33,12 +33,12 @@ const Form = () => {
     if (inputValue === currentTodo) return;
     
     const updatedTodo = {
-      id: currentTodo.id,
       text: inputValue,
-      completed: currentTodo.completed
+      completed: currentTodo.completed,
+      createdAt: currentTodo.createdAt
     };
     
-    editTodo(updatedTodo)
+    editTodo(currentTodo.id, updatedTodo)
     
     inputRef.current.focus();
     setIsEditing(false);
