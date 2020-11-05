@@ -13,14 +13,18 @@ const Nav = () => {
         <ul className="navigation">
           {location.pathname === "/" ? (
             <li><Link to="/settings">Settings</Link></li>
-            ) : (
-              <li><Link to="/">Todos</Link></li>
+          ) : (
+            <li><Link to="/">Todos</Link></li>
           )}
           <li onClick={() => config.auth().signOut()}>Logout</li>
         </ul>
       ) : (
         <ul className="navigation">
-          <li><Link to="/login">Register</Link></li>
+          {location.pathname === "/login" ? (
+            <li><Link to="/register">Register</Link></li>
+          ) : (
+            <li><Link to="/login">Login</Link></li>
+          )}
         </ul>
       )}
     </>
