@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthProvider } from "./Auth"
+import { TodoProvider } from "./context/TodoContext";
 import Nav from "./components/Nav";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -18,7 +19,9 @@ const App = () => {
       <Router>
         <div className="app">
           <Nav />
-          <PrivateRoute path="/" exact component={Main} />
+          <TodoProvider>
+            <PrivateRoute path="/" exact component={Main} />
+          </TodoProvider>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <PrivateRoute path="/settings" component={Settings} />

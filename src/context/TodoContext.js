@@ -21,7 +21,6 @@ export const TodoProvider = ({ children }) => {
   
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
   const [currentTodo, setCurrentTodo] = useState(null);
 
   const db = firebase.firestore();
