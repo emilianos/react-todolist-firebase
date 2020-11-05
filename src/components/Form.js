@@ -62,6 +62,7 @@ const Form = () => {
           onChange={(e) => setInputValue(e.target.value)}
           placeholder={"Type here..."}
           ref={inputRef}
+          autoFocus
         />
         <button
           className="cancel"

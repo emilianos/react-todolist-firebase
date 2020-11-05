@@ -30,8 +30,6 @@ export const TodoProvider = ({ children }) => {
       const todosData = [...state.todos];
       snapshot.forEach((doc) => todosData.push({ ...doc.data(), id: doc.id }));
 
-      inputRef.current.focus();
-
       dispatch({
         type: "UPDATE_TODOS",
         payload: todosData
