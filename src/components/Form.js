@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
+import { AuthContext } from "../Auth";
 
 const Form = () => {
   const {
@@ -13,6 +14,8 @@ const Form = () => {
     currentTodo
   } = useContext(TodoContext);
 
+  const { currentUser } = useContext(AuthContext)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue === "") return;
@@ -20,7 +23,8 @@ const Form = () => {
     const newTodo = {
       text: inputValue,
       completed: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      userUID: currentUser.uid
     };
 
     addTodo(newTodo);
@@ -35,7 +39,8 @@ const Form = () => {
     const updatedTodo = {
       text: inputValue,
       completed: currentTodo.completed,
-      createdAt: currentTodo.createdAt
+      createdAt: currentTodo.createdAt,
+      userUID: currentUser.uid
     };
     
     editTodo(currentTodo.id, updatedTodo)

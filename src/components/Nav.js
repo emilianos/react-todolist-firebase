@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../Auth";
 
 const Nav = () => {
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext)
   const location = useLocation();
 
   return (

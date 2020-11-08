@@ -3,10 +3,12 @@ import React, {
   useReducer,
   useState,
   useEffect,
+  useContext,
   useRef
 } from "react";
 import firebase from "../firebase";
 import TodoReducer from "./TodoReducer";
+import { AuthContext } from "../Auth";
 
 const initialState = {
   todos: []
@@ -17,8 +19,9 @@ export const TodoContext = createContext(initialState);
 export const TodoProvider = ({ children }) => {
   const [state, dispatch] = useReducer(TodoReducer, initialState);
 
+  const { currentUser } = useContext(AuthContext)
   const inputRef = useRef(null);
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [currentTodo, setCurrentTodo] = useState(null);
@@ -26,14 +29,22 @@ export const TodoProvider = ({ children }) => {
   const db = firebase.firestore();
 
   useEffect(() => {
-    const unsubscribe = db.collection("todos").orderBy("createdAt").onSnapshot((snapshot) => {
+    const todosRef = db.collection('todos');
+    const doc = todosRef.where("userUID", "==", currentUser.uid);
+
+    const unsubscribe = doc.onSnapshot(snapshot => {
       const todosData = [...state.todos];
-      snapshot.forEach((doc) => todosData.push({ ...doc.data(), id: doc.id }));
+      
+      snapshot.forEach(doc => {
+        todosData.push({ ...doc.data(), id: doc.id })
+      });
 
       dispatch({
         type: "UPDATE_TODOS",
         payload: todosData
       });
+    }, err => {
+      console.error(`Encountered error: ${err}`);
     });
 
     return unsubscribe;
@@ -62,7 +73,8 @@ export const TodoProvider = ({ children }) => {
     const chkTodo = db.collection("todos").doc(todo.id).set({
       text: todo.text,
       completed: !todo.completed,
-      createdAt: todo.createdAt
+      createdAt: todo.createdAt,
+      userUID: todo.userUID
     });
 
     dispatch({
