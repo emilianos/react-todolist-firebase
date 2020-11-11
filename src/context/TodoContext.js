@@ -29,6 +29,8 @@ export const TodoProvider = ({ children }) => {
   const db = firebase.firestore();
 
   useEffect(() => {
+    if(currentUser === null) return
+
     const todosRef = db.collection('todos');
     const doc = todosRef.where("userUID", "==", currentUser.uid);
 
