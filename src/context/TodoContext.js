@@ -20,6 +20,7 @@ export const TodoProvider = ({ children }) => {
   const [state, dispatch] = useReducer(TodoReducer, initialState);
 
   const { currentUser } = useContext(AuthContext)
+  
   const inputRef = useRef(null);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -27,13 +28,12 @@ export const TodoProvider = ({ children }) => {
   const [currentTodo, setCurrentTodo] = useState(null);
 
   const db = firebase.firestore();
+  const todosRef = db.collection('todos');
 
   useEffect(() => {
     if(currentUser === null) return
 
-    const todosRef = db.collection('todos');
-    const doc = todosRef.where("userUID", "==", currentUser.uid);
-
+    const doc = todosRef.where("userUID", "==", currentUser.uid).orderBy("createdAt");
     const unsubscribe = doc.onSnapshot(snapshot => {
       const todosData = [...state.todos];
       
@@ -50,11 +50,10 @@ export const TodoProvider = ({ children }) => {
     });
 
     return unsubscribe;
-  }, [db]);
-
+  }, [currentUser, db]);
 
   const addTodo = (todo) => {
-    const newTodo = db.collection("todos").add(todo);
+    const newTodo = todosRef.add(todo);
 
     dispatch({
       type: "ADD_TODO",
@@ -63,7 +62,7 @@ export const TodoProvider = ({ children }) => {
   };
 
   const editTodo = (id, updatedTodo) => {
-    const updTodo = db.collection("todos").doc(id).set(updatedTodo);
+    const updTodo = todosRef.doc(id).set(updatedTodo);
 
     dispatch({
       type: "EDIT_TODO",
@@ -72,7 +71,7 @@ export const TodoProvider = ({ children }) => {
   };
   
   const checkTodo = (todo) => {
-    const chkTodo = db.collection("todos").doc(todo.id).set({
+    const chkTodo = todosRef.doc(todo.id).set({
       text: todo.text,
       completed: !todo.completed,
       createdAt: todo.createdAt,
@@ -88,7 +87,7 @@ export const TodoProvider = ({ children }) => {
   };
 
   const deleteTodo = (id) => {
-    const delTodo = db.collection("todos").doc(id).delete();
+    const delTodo = todosRef.doc(id).delete();
 
     dispatch({
       type: "DELETE_TODO",
