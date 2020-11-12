@@ -16,17 +16,17 @@ import "./App.css";
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <div className="app">
-          <Nav />
-          <TodoProvider>
+      <TodoProvider>
+        <Router>
+          <div className="app">
+            <Nav />
             <PrivateRoute path="/" exact component={Main} />
-          </TodoProvider>
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <PrivateRoute path="/settings" component={Settings} />
-        </div>
-      </Router>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <PrivateRoute path="/settings" component={Settings} />
+          </div>
+        </Router>
+      </TodoProvider>
     </AuthProvider>
   );
 };

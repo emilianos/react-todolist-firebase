@@ -2,10 +2,18 @@ import React, { useContext } from "react";
 import config from "../firebase"
 import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../Auth";
+import { TodoContext } from "../context/TodoContext";
 
 const Nav = () => {
   const { currentUser } = useContext(AuthContext)
+  const { resetTodo } = useContext(TodoContext);
   const location = useLocation();
+
+
+  function logout() {
+    resetTodo();
+    config.auth().signOut();
+  }
 
   return (
     <>
@@ -16,7 +24,7 @@ const Nav = () => {
           ) : (
             <li><Link to="/">Todos</Link></li>
           )}
-          <li onClick={() => config.auth().signOut()}>Logout</li>
+          <li onClick={logout}>Logout</li>
         </ul>
       ) : (
         <ul className="navigation">
