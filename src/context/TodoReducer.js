@@ -25,6 +25,11 @@ export default (state, action) => {
         ...state,
         todos: [...state.todos]
       };
+    case "RESET_TODO": {
+      return {
+        todos: []
+      }
+    }
     default:
       return state;
   }

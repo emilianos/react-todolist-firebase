@@ -97,6 +97,12 @@ export const TodoProvider = ({ children }) => {
     inputRef.current.focus();
   };
 
+  const resetTodo = () => {
+    dispatch({
+      type: 'RESET_TODO'
+    })
+  }
+
   return (
     <div>
       <TodoContext.Provider
@@ -112,7 +118,8 @@ export const TodoProvider = ({ children }) => {
           checkTodo,
           deleteTodo,
           currentTodo,
-          setCurrentTodo
+          setCurrentTodo,
+          resetTodo
         }}
       >
         {children}
