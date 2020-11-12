@@ -5,6 +5,11 @@
   --accent-color: #a2ffdb;
 }
 
+#root,
+#root > div {
+  height: 100%;
+}
+
 .app {
   font-family: "Roboto Mono", serif;
   text-align: center;
